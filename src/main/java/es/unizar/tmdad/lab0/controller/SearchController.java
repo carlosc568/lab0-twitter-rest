@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
+import org.springframework.social.twitter.api.SearchResults;
+import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SearchController {
 
@@ -24,15 +25,15 @@ public class SearchController {
     }
 
     @RequestMapping("/search")
-    public String search(@RequestParam("q") String q, Model m) {
-        m.addAttribute("res", twitter.search(q));
-        return "search :: content";
+    @ResponseBody
+    public SearchResults search(@RequestParam("q") String q, Model m) {
+        return twitter.search(q);
     }
 
     @ResponseStatus(value= HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UncategorizedApiException.class)
-    public String handleUncategorizedApiException(Model m) {
-        m.addAttribute("res", twitter.emptyAnswer());
-        return "search :: content";
+    @ResponseBody  
+    public SearchResults handleUncategorizedApiException(Model m) {
+        return twitter.emptyAnswer();
     }
 }
