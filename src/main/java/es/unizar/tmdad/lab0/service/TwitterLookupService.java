@@ -11,17 +11,17 @@ import java.util.Collections;
 
 @Service
 public class TwitterLookupService {
-    @Value("${twitter.consumerKey}")
-    private String consumerKey;
+   
+    private String consumerKey = System.getenv("twitter.consumerKey");
 
-    @Value("${twitter.consumerSecret}")
-    private String consumerSecret;
+    
+    private String consumerSecret = System.getenv("twitter.consumerSecret");
 
-    @Value("${twitter.accessToken}")
-    private String accessToken;
+    
+    private String accessToken = System.getenv("twitter.accessToken");
 
-    @Value("${twitter.accessTokenSecret}")
-    private String accessTokenSecret;
+    
+    private String accessTokenSecret = System.getenv("twitter.accessTokenSecret");
 
     public SearchResults search(String query) {
         Twitter twitter = new TwitterTemplate(consumerKey, consumerSecret, accessToken, accessTokenSecret);
